@@ -173,8 +173,8 @@ internal class GlBlitter(
         }
     }
 
-    /** 현재 프레임을 인코더 Surface 로 그린다. 반환값은 프레임 타임스탬프(ns) */
-    fun drawFrame(): Long {
+    /** 현재 프레임을 인코더 Surface 로 그린다. 반환값은 실제로 쓴 프레임 타임스탬프(ns) */
+    fun drawFrame(presentationTimeNs: Long): Long {
         surfaceTexture.updateTexImage()
         surfaceTexture.getTransformMatrix(textureMatrix)
 
@@ -203,7 +203,7 @@ internal class GlBlitter(
         GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, 0)
         checkGlError("drawFrame")
 
-        val timestampNs = surfaceTexture.timestamp
+        val timestampNs = if (presentationTimeNs > 0) presentationTimeNs else surfaceTexture.timestamp
         EGLExt.eglPresentationTimeANDROID(eglDisplay, eglSurface, timestampNs)
         if (!EGL14.eglSwapBuffers(eglDisplay, eglSurface)) {
             fail("eglSwapBuffers 실패")

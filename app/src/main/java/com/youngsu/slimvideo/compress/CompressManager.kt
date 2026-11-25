@@ -4,9 +4,9 @@ import android.content.Context
 import android.os.SystemClock
 import android.util.Log
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -35,11 +35,24 @@ object CompressManager {
         ) : State
 
         data class Success(val result: CompressResult) : State
-        data class Failure(val error: CompressError, val audioDropped: Boolean = false) : State
+        data class Failure(
+            val error: CompressError,
+            val detail: String? = null,
+            val audioDropped: Boolean = false
+        ) : State
         data object Cancelled : State
     }
 
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    /**
+     * 인코딩은 EGL 컨텍스트를 만든 스레드에서만 GL 을 부를 수 있다.
+     * Dispatchers.Default 는 스레드가 바뀔 수 있으므로 전용 스레드 하나에서 돌린다.
+     */
+    private val engineThread = java.util.concurrent.Executors.newSingleThreadExecutor { runnable ->
+        Thread(runnable, "slimvideo-transcode")
+    }
+    private val scope = CoroutineScope(
+        SupervisorJob() + engineThread.asCoroutineDispatcher()
+    )
     private val _state = MutableStateFlow<State>(State.Idle)
     val state: StateFlow<State> = _state.asStateFlow()
 
@@ -62,7 +75,9 @@ object CompressManager {
             info.sizeBytes,
             targetBytes,
             info.hasAudio,
-            info.audioMime
+            info.audioMime,
+            info.videoMime,
+            info.audioBitrate
         )
 
     fun start(context: Context, request: CompressRequest): Boolean {
@@ -131,12 +146,12 @@ object CompressManager {
                 if (cancelled.error == CompressError.CANCELLED) {
                     _state.value = State.Cancelled
                 } else {
-                    Log.w(TAG, "압축 실패: ${cancelled.error}", cancelled)
-                    _state.value = State.Failure(cancelled.error)
+                    Log.w(TAG, "압축 실패: ${cancelled.error} ${cancelled.detail ?: ""}", cancelled)
+                    _state.value = State.Failure(cancelled.error, cancelled.detail)
                 }
             } catch (t: Throwable) {
                 Log.w(TAG, "압축 실패", t)
-                _state.value = State.Failure(CompressError.ENGINE)
+                _state.value = State.Failure(CompressError.ENGINE, t.brief())
             } finally {
                 runCatching { temp.delete() }
                 job = null
@@ -154,5 +169,11 @@ object CompressManager {
     fun reset() {
         if (isRunning) return
         _state.value = State.Idle
+    }
+
+    private fun Throwable.brief(): String {
+        val message = this.message?.replace('\n', ' ')?.take(140).orEmpty()
+        val name = this.javaClass.simpleName
+        return if (message.isBlank()) name else "$name: $message"
     }
 }

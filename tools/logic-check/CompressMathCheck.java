@@ -22,6 +22,7 @@ public class CompressMathCheck {
         targetSizeRules();
         audioRules();
         endToEndPlans();
+        realDeviceCases();
         formatting();
 
         System.out.println();
@@ -116,6 +117,37 @@ public class CompressMathCheck {
         // 4K30 H.264 는 상한(45Mbps)을 넘지 않는다
         int uhd = CompressMath.resolutionBitrate(3840, 2160, 30, CompressMath.CODEC_H264);
         truth("4K capped (" + uhd + ")", uhd <= CompressMath.MAX_VIDEO_BITRATE);
+
+        // 화질 하한/상한
+        int floor1080 = CompressMath.bitrateFloor(1920, 1080, 30, CompressMath.CODEC_HEVC);
+        int ceiling1080 = CompressMath.bitrateCeiling(1920, 1080, 30, CompressMath.CODEC_HEVC);
+        truth("1080p HEVC floor sane (" + floor1080 + ")",
+                floor1080 >= CompressMath.MIN_VIDEO_BITRATE_HARD && floor1080 < hevc);
+        truth("1080p HEVC ceiling above floor (" + ceiling1080 + ")", ceiling1080 > floor1080);
+        truth("ceiling above default bitrate", ceiling1080 > hevc);
+
+        // 코덱 판별
+        eq("mime hevc", CompressMath.CODEC_HEVC, CompressMath.codecFromMime("video/hevc"));
+        eq("mime avc", CompressMath.CODEC_H264, CompressMath.codecFromMime("video/avc"));
+        eq("mime vp9 unknown", CompressMath.CODEC_UNKNOWN,
+                CompressMath.codecFromMime("video/x-vnd.on2.vp9"));
+        eq("mime null unknown", CompressMath.CODEC_UNKNOWN, CompressMath.codecFromMime(null));
+
+        // 같은 화질을 유지하는 데 필요한 배율
+        truth("H.264 -> H.265 needs fewer bits",
+                CompressMath.codecRatioFactor(CompressMath.CODEC_H264, CompressMath.CODEC_HEVC)
+                        < CompressMath.codecRatioFactor(CompressMath.CODEC_HEVC, CompressMath.CODEC_HEVC));
+        truth("H.265 -> H.264 needs the most bits",
+                CompressMath.codecRatioFactor(CompressMath.CODEC_HEVC, CompressMath.CODEC_H264)
+                        > CompressMath.codecRatioFactor(CompressMath.CODEC_HEVC, CompressMath.CODEC_HEVC));
+        truth("light ratio below balance",
+                CompressMath.targetRatio(CompressMath.MODE_LIGHT, CompressMath.CODEC_H264,
+                        CompressMath.CODEC_HEVC)
+                        < CompressMath.targetRatio(CompressMath.MODE_BALANCE, CompressMath.CODEC_H264,
+                        CompressMath.CODEC_HEVC));
+        truth("keep quality ratio below 1",
+                CompressMath.targetRatio(CompressMath.MODE_KEEP_QUALITY, CompressMath.CODEC_H264,
+                        CompressMath.CODEC_HEVC) < 0.8);
     }
 
     // ------------------------------------------------------------ 목표 용량
@@ -147,6 +179,14 @@ public class CompressMathCheck {
         eq("reduction 100 -> 25", 75d, round1(CompressMath.reductionPercent(100L, 25L)));
         eq("reduction never negative", 0d, round1(CompressMath.reductionPercent(100L, 130L)));
         truth("reduction under 100", CompressMath.reductionPercent(100L, 1L) < 100d);
+
+        // 원본 비트레이트 추정
+        eq("given bitrate wins", 5_000_000,
+                CompressMath.sourceVideoBitrate(5_000_000, 100L, 10_000_000L, 128_000));
+        int derived = CompressMath.sourceVideoBitrate(0, 10L * 1024 * 1024, 10_000_000L, 128_000);
+        truth("derived bitrate (" + derived + ")",
+                derived > 7_800_000 && derived < 8_200_000);
+        eq("no data = 0", 0, CompressMath.sourceVideoBitrate(0, 0, 0, 0));
     }
 
     // ---------------------------------------------------------------- 오디오
@@ -161,6 +201,26 @@ public class CompressMathCheck {
 
         eq("aac bitrate", CompressMath.AUDIO_BITRATE, CompressMath.audioBitrateFor(AudioStrategy.COPY));
         eq("none bitrate", 0, CompressMath.audioBitrateFor(AudioStrategy.NONE));
+
+        // 다시 인코딩하는 경우
+        truth("opus reencodes", CompressMath.shouldReencodeAudio(
+                CompressMath.MODE_BALANCE, AudioStrategy.TRANSCODE));
+        truth("light reencodes aac", CompressMath.shouldReencodeAudio(
+                CompressMath.MODE_LIGHT, AudioStrategy.COPY));
+        truth("balance copies aac", !CompressMath.shouldReencodeAudio(
+                CompressMath.MODE_BALANCE, AudioStrategy.COPY));
+        truth("silent never reencodes", !CompressMath.shouldReencodeAudio(
+                CompressMath.MODE_LIGHT, AudioStrategy.NONE));
+
+        // 복사할 때는 원본 오디오 비트레이트로 예상 용량을 계산한다
+        eq("copy uses source audio bitrate", 64_000, CompressMath.audioBitrateFor(
+                CompressMath.MODE_BALANCE, AudioStrategy.COPY, false, 64_000));
+        eq("copy unknown falls back", CompressMath.AUDIO_BITRATE, CompressMath.audioBitrateFor(
+                CompressMath.MODE_BALANCE, AudioStrategy.COPY, false, 0));
+        eq("light reencode bitrate", CompressMath.AUDIO_BITRATE_LIGHT, CompressMath.audioBitrateFor(
+                CompressMath.MODE_LIGHT, AudioStrategy.COPY, true, 192_000));
+        eq("silent bitrate is zero", 0, CompressMath.audioBitrateFor(
+                CompressMath.MODE_BALANCE, AudioStrategy.NONE, false, 128_000));
     }
 
     // ---------------------------------------------------------- 전체 계획
@@ -172,7 +232,8 @@ public class CompressMathCheck {
 
         CompressMath.Plan quality = CompressMath.plan(
                 CompressMath.MODE_KEEP_QUALITY, CompressMath.CODEC_HEVC,
-                1920, 1080, 0, 30, srcBitrate, duration, srcBytes, 0, true, "audio/mp4a-latm");
+                1920, 1080, 0, 30, srcBitrate, duration, srcBytes, 0, true, "audio/mp4a-latm",
+                "video/avc", 128_000);
         eq("quality keeps width", 1920, quality.outputWidth);
         eq("quality keeps height", 1080, quality.outputHeight);
         eq("quality audio copy", AudioStrategy.COPY, quality.audioStrategy);
@@ -182,16 +243,19 @@ public class CompressMathCheck {
 
         CompressMath.Plan light = CompressMath.plan(
                 CompressMath.MODE_LIGHT, CompressMath.CODEC_HEVC,
-                1920, 1080, 0, 30, srcBitrate, duration, srcBytes, 0, true, "audio/mp4a-latm");
+                1920, 1080, 0, 30, srcBitrate, duration, srcBytes, 0, true, "audio/mp4a-latm",
+                "video/avc", 128_000);
         eq("light 480 short side", 480, light.outputHeight);
         eq("light width 852", 852, light.outputWidth);
         truth("light smaller than quality", light.estimatedBytes < quality.estimatedBytes);
         truth("light is a downscale", light.downscaled);
+        truth("light reencodes audio", light.audioReencode);
 
         // 아이폰 세로 영상(저장 1920x1080, 회전 90) — 보이는 방향 기준 1080p
         CompressMath.Plan portrait = CompressMath.plan(
                 CompressMath.MODE_BALANCE, CompressMath.CODEC_H264,
-                1920, 1080, 90, 30, 12_000_000, 30_000_000L, 40L * 1024 * 1024, 0, true, "audio/mp4a-latm");
+                1920, 1080, 90, 30, 12_000_000, 30_000_000L, 40L * 1024 * 1024, 0, true, "audio/mp4a-latm",
+                "video/avc", 128_000);
         eq("portrait display w", 1080, portrait.displayWidth);
         eq("portrait display h", 1920, portrait.displayHeight);
         eq("portrait coded w", 1920, portrait.outputWidth);
@@ -217,7 +281,6 @@ public class CompressMathCheck {
         // 90초를 10MB 로 맞추려면 720p 가 한계 — 해상도를 낮춰 목표를 지킨다
         eq("tight target short side", 720, Math.min(targetPlan.outputWidth, targetPlan.outputHeight));
         truth("tight target fits", targetPlan.estimatedBytes <= target);
-        truth("target bitrate under source cap", targetPlan.videoBitrate <= (int) (srcBitrate * 0.88));
 
         // 아주 작은 목표 용량 + 긴 4K 영상 → 해상도를 낮춰 목표를 지킨다
         long smallTarget = 10L * 1024 * 1024;
@@ -244,7 +307,7 @@ public class CompressMathCheck {
         CompressMath.Plan lowSource = CompressMath.plan(
                 CompressMath.MODE_LIGHT, CompressMath.CODEC_H264,
                 1280, 720, 0, 30, 400_000, 60_000_000L, 3L * 1024 * 1024, 0, true, "audio/mp4a-latm");
-        truth("low source capped (" + lowSource.videoBitrate + ")", lowSource.videoBitrate <= 352_000);
+        truth("low source not inflated (" + lowSource.videoBitrate + ")", lowSource.videoBitrate <= 400_000);
 
         // 원본 비트레이트를 모르는 파일도 크기·길이로 추정해 원본보다 커지지 않는다
         CompressMath.Plan unknownBitrate = CompressMath.plan(
@@ -262,6 +325,64 @@ public class CompressMathCheck {
         truth("never estimates larger than source", alreadySmall.estimatedBytes <= 500_000L);
     }
 
+    // ------------------------------------------------- 실제 기기에서 실패한 사례
+
+    /**
+     * 2026-11-25 사용자가 실제 기기(Samsung, Android 14/15)에서 변환을 시도한 두 영상.
+     * v1.0.1 은 두 경우 모두 "예상 6~11% 절감" 이라고 보여 주고 실제로는 실패했다.
+     */
+    private static void realDeviceCases() {
+        // 1) 돈키호테플로라.mp4 — 1830x1024 · 8:05 · H.264 · 84MB · AAC (공유 균형 · H.265)
+        long bigBytes = 84L * 1024 * 1024;
+        long bigDuration = 485_000_000L;
+        CompressMath.Plan balance = CompressMath.plan(
+                CompressMath.MODE_BALANCE, CompressMath.CODEC_HEVC,
+                1830, 1024, 0, 30, 1_320_000, bigDuration, bigBytes, 0, true, "audio/mp4a-latm",
+                "video/avc", 128_000);
+        truth("1830x1024 keeps size", balance.outputWidth == 1830 && balance.outputHeight == 1024);
+        truth("84MB balance saves 40~70% (" + fmt(balance.estimatedReductionPercent) + "%)",
+                balance.estimatedReductionPercent >= 40d && balance.estimatedReductionPercent <= 70d);
+
+        CompressMath.Plan bigQuality = CompressMath.plan(
+                CompressMath.MODE_KEEP_QUALITY, CompressMath.CODEC_HEVC,
+                1830, 1024, 0, 30, 1_320_000, bigDuration, bigBytes, 0, true, "audio/mp4a-latm",
+                "video/avc", 128_000);
+        truth("84MB keep quality saves 35~70% (" + fmt(bigQuality.estimatedReductionPercent) + "%)",
+                bigQuality.estimatedReductionPercent >= 35d && bigQuality.estimatedReductionPercent <= 70d);
+
+        CompressMath.Plan bigLight = CompressMath.plan(
+                CompressMath.MODE_LIGHT, CompressMath.CODEC_HEVC,
+                1830, 1024, 0, 30, 1_320_000, bigDuration, bigBytes, 0, true, "audio/mp4a-latm",
+                "video/avc", 128_000);
+        truth("84MB light saves 50~80% (" + fmt(bigLight.estimatedReductionPercent) + "%)",
+                bigLight.estimatedReductionPercent >= 50d && bigLight.estimatedReductionPercent <= 80d);
+        truth("84MB light is 480p", Math.min(bigLight.outputWidth, bigLight.outputHeight) == 480);
+
+        // 2) 2024 ...mp4 — 1280x590 · 3:04 · H.264 · 6.8MB · AAC (초경량 1040x480 · H.265)
+        long smallBytes = 7_140_000L;
+        long smallDuration = 184_000_000L;
+        CompressMath.Plan tiny = CompressMath.plan(
+                CompressMath.MODE_LIGHT, CompressMath.CODEC_HEVC,
+                1280, 590, 0, 30, 0, smallDuration, smallBytes, 0, true, "audio/mp4a-latm",
+                "video/avc", 128_000);
+        eq("1280x590 -> 480p height", 480, tiny.outputHeight);
+        eq("1280x590 -> 480p width", 1040, tiny.outputWidth);
+        truth("6.8MB light saves more than 25% (" + fmt(tiny.estimatedReductionPercent) + "%)",
+                tiny.estimatedReductionPercent > 25d);
+        truth("6.8MB light estimate below source", tiny.estimatedBytes < smallBytes);
+
+        // 이 영상은 이미 310kbps 로 아주 작게 압축되어 있다 — 화질을 지키는 모드는
+        // 억지로 원본보다 키우지 않는다
+        CompressMath.Plan tinyBalance = CompressMath.plan(
+                CompressMath.MODE_BALANCE, CompressMath.CODEC_HEVC,
+                1280, 590, 0, 30, 0, smallDuration, smallBytes, 0, true, "audio/mp4a-latm",
+                "video/avc", 128_000);
+        truth("tiny source balance estimate below source",
+                tinyBalance.estimatedBytes < smallBytes);
+        truth("tiny source balance video bitrate not above source (" + tinyBalance.videoBitrate + ")",
+                tinyBalance.videoBitrate <= 310_000);
+    }
+
     private static void formatting() {
         eq("format 512 B", "512 B", CompressMath.formatBytes(512));
         eq("format 1 KB", "1 KB", CompressMath.formatBytes(1024));
@@ -275,6 +396,10 @@ public class CompressMathCheck {
     }
 
     // ---------------------------------------------------------------- 도우미
+
+    private static String fmt(double value) {
+        return String.format(java.util.Locale.US, "%.1f", value);
+    }
 
     private static double round1(double value) {
         return Math.round(value * 10d) / 10d;

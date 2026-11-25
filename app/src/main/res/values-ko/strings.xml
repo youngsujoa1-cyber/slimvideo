@@ -74,6 +74,7 @@
     <string name="error_storage">결과를 저장할 공간이 부족합니다.</string>
     <string name="error_generic">문제가 생겼습니다. 다른 영상으로 시도해 주세요.</string>
     <string name="error_read">파일을 열 수 없습니다.</string>
+    <string name="error_detail">오류 상세: %1$s</string>
 
     <!-- 보관함 -->
     <string name="library_title">압축한 영상</string>

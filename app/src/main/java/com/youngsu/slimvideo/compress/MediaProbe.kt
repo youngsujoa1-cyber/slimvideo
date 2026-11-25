@@ -100,6 +100,7 @@ object MediaProbe {
             }
 
             val audioMime = audioFormat?.getString(MediaFormat.KEY_MIME)
+            val audioBitrate = if (audioFormat != null) intOr(audioFormat, MediaFormat.KEY_BIT_RATE, 0) else 0
             if (audioMime != null && !codecExists(audioMime, false)) {
                 // 디코더가 없는 오디오는 무음 처리보다 원본을 살리기 어렵다 → 무음으로 진행하고 알린다
                 Log.w(TAG, "오디오 디코더 없음: $audioMime")
@@ -118,7 +119,8 @@ object MediaProbe {
                 fps = if (fps > 0) fps else 30,
                 audioMime = audioMime,
                 audioSampleRate = if (sampleRate > 0) sampleRate else 44_100,
-                audioChannels = if (channels > 0) channels else 2
+                audioChannels = if (channels > 0) channels else 2,
+                audioBitrate = audioBitrate
             )
         } finally {
             runCatching { extractor.release() }
@@ -193,6 +195,26 @@ object MediaProbe {
             info.isEncoder == encoder && info.supportedTypes.any { it.equals(mime, ignoreCase = true) }
         }
     }.getOrDefault(false)
+
+    /**
+     * 해당 MIME 을 다룰 수 있는 코덱 이름 목록 — 하드웨어 코덱을 앞에 둔다.
+     * createEncoderByType/createDecoderByType 이 실패하는 기기에서 이름으로 다시 시도할 때 쓴다.
+     */
+    fun codecNames(mime: String, encoder: Boolean): List<String> = runCatching {
+        val infos = MediaCodecList(MediaCodecList.REGULAR_CODECS).codecInfos
+            .filter { info ->
+                info.isEncoder == encoder && info.supportedTypes.any { it.equals(mime, ignoreCase = true) }
+            }
+        infos.sortedBy { info -> if (hardware(info)) 0 else 1 }.map { it.name }.distinct()
+    }.getOrDefault(emptyList())
+
+    /** 하드웨어 코덱인지 (API 29 부터 알 수 있다) */
+    private fun hardware(info: android.media.MediaCodecInfo): Boolean =
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            info.isHardwareAccelerated
+        } else {
+            true
+        }
 
     fun hevcEncoderAvailable(): Boolean = codecExists("video/hevc", true)
 

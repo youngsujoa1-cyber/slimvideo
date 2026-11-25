@@ -69,6 +69,7 @@
     <string name="error_storage">保存する空き容量が足りません。</string>
     <string name="error_generic">問題が発生しました。別の動画でお試しください。</string>
     <string name="error_read">ファイルを開けませんでした。</string>
+    <string name="error_detail">詳細: %1$s</string>
 
     <string name="library_title">圧縮した動画</string>
     <string name="library_empty">まだ圧縮した動画はありません</string>

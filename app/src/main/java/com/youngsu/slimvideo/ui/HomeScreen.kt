@@ -162,7 +162,7 @@ class HomeScreen(host: MainActivity) : Screen(host) {
     private fun stateKey(state: CompressManager.State): String = when (state) {
         is CompressManager.State.Running -> "run-${state.progress}-${state.stage}"
         is CompressManager.State.Success -> "ok-${state.result.outputUri}"
-        is CompressManager.State.Failure -> "fail-${state.error}"
+        is CompressManager.State.Failure -> "fail-${state.error}-${state.detail}"
         CompressManager.State.Cancelled -> "cancel"
         CompressManager.State.Idle ->
             "idle-${Session.uri}-${Session.info?.displayName}-$mode-$codec-$targetMb"
@@ -182,6 +182,20 @@ class HomeScreen(host: MainActivity) : Screen(host) {
 
         (state as? CompressManager.State.Failure)?.let {
             col.addView(buildBanner(errorText(it.error), error = true))
+            val detail = it.detail?.takeIf { text -> text.isNotBlank() }
+            if (detail != null) {
+                col.addView(
+                    Ui.text(
+                        host,
+                        host.getString(R.string.error_detail, detail.take(180)),
+                        10.5f,
+                        host.getColor(R.color.text_tertiary)
+                    ).apply {
+                        setPadding(dp2(4f), dp2(6f), dp2(4f), 0)
+                        setLineSpacing(dp2(2f).toFloat(), 1f)
+                    }
+                )
+            }
             col.addView(Ui.spacing(host, 14f))
         }
         if (state is CompressManager.State.Cancelled) {

@@ -69,6 +69,7 @@
     <string name="error_storage">No hay espacio suficiente para guardar el resultado.</string>
     <string name="error_generic">Algo salió mal. Prueba con otro vídeo.</string>
     <string name="error_read">No se pudo abrir el archivo.</string>
+    <string name="error_detail">Detalles: %1$s</string>
 
     <string name="library_title">Vídeos comprimidos</string>
     <string name="library_empty">Aún no hay vídeos comprimidos</string>

@@ -69,6 +69,7 @@
     <string name="error_storage">保存空间不足。</string>
     <string name="error_generic">出现问题，请换一个视频试试。</string>
     <string name="error_read">无法打开文件。</string>
+    <string name="error_detail">错误详情: %1$s</string>
 
     <string name="library_title">已压缩的视频</string>
     <string name="library_empty">还没有压缩的视频</string>

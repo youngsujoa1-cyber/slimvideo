@@ -19,7 +19,9 @@ data class VideoInfo(
     val fps: Int,
     val audioMime: String?,
     val audioSampleRate: Int,
-    val audioChannels: Int
+    val audioChannels: Int,
+    /** 원본 오디오 비트레이트 (모르면 0) — AAC 를 그대로 옮길 때 예상 용량 계산에 쓴다 */
+    val audioBitrate: Int = 0
 ) {
     private val display = CompressMath.displaySize(width, height, rotation)
 

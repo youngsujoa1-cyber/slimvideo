@@ -157,6 +157,17 @@ class CompressService : Service() {
 
     override fun onBind(intent: Intent?): IBinder? = null
 
+    /**
+     * Android 15 부터는 mediaProcessing 포그라운드 서비스에 시간 제한(6시간)이 있다.
+     * 이 콜백을 구현하지 않으면 시스템이 ANR 로 처리하므로, 작업을 정리하고 서비스를 내린다.
+     */
+    @androidx.annotation.RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
+    override fun onTimeout(startId: Int, fgsType: Int) {
+        Log.w(TAG, "포그라운드 서비스 시간 초과 — 작업을 정리합니다")
+        CompressManager.cancel()
+        shutdown()
+    }
+
     // -------------------------------------------------------------- helpers
 
     private fun createChannel() {

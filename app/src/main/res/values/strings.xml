@@ -74,6 +74,7 @@
     <string name="error_storage">Not enough space to save the result.</string>
     <string name="error_generic">Something went wrong. Try another video.</string>
     <string name="error_read">The file could not be opened.</string>
+    <string name="error_detail">Details: %1$s</string>
 
     <!-- library -->
     <string name="library_title">Compressed videos</string>
