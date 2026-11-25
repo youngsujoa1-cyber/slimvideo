@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>슬림 비디오 (SlimVideo) — 화질은 그대로, 동영상 용량만 줄이기</title>
+<meta name="description" content="슬림 비디오는 동영상 용량을 줄이는 안드로이드 앱입니다. 휴대폰 하드웨어 인코더로 기기 안에서만 압축하고, 원본은 그대로 두며, 영상은 서버로 보내지 않습니다. 개발자 Topster.">
+<meta property="og:title" content="슬림 비디오 (SlimVideo) — 동영상 용량 줄이기">
+<meta property="og:description" content="화질은 그대로, 용량만 줄이는 동영상 압축. 서버 없이 기기 안에서만 변환합니다.">
+<meta name="theme-color" content="#0F141B" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F3F6FA" media="(prefers-color-scheme: light)">
+<style>
+  :root{
+    --bg:#F3F6FA; --card:#FFFFFF; --text:#111A24; --muted:#5A6A7B;
+    --line:#DCE5EF; --accent:#B87400; --accent-soft:#FFF0D2; --profit:#0E8A4F;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0F141B; --card:#161D26; --text:#F2F6FA; --muted:#9AA9BA;
+      --line:#2C3846; --accent:#FFC24B; --accent-soft:#4A3A12; --profit:#46D98A;
+    }
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",Roboto,sans-serif;
+    line-height:1.7; font-size:16px;
+  }
+  .wrap{max-width:820px; margin:0 auto; padding:28px 18px 60px}
+  .hero{display:flex; gap:16px; align-items:center; margin:12px 0 22px}
+  .icon{
+    width:64px; height:64px; flex:0 0 64px; border-radius:16px;
+    background:linear-gradient(145deg,#1B2430,#0F141B);
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .icon svg{width:38px; height:38px}
+  h1{font-size:26px; margin:0 0 2px; letter-spacing:-0.02em; line-height:1.25}
+  .byline{color:var(--muted); font-size:14px; margin:0}
+  .lead{font-size:17px; margin:0 0 24px}
+  .lead span{color:var(--muted)}
+  h2{font-size:18px; margin:30px 0 10px; letter-spacing:-0.01em}
+  .grid{display:grid; grid-template-columns:1fr; gap:12px}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px}
+  .card h3{margin:0 0 6px; font-size:15px}
+  .card p{margin:0; color:var(--muted); font-size:14px}
+  .links{display:grid; grid-template-columns:1fr; gap:12px; margin-top:8px}
+  a.btn{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    background:var(--card); border:1px solid var(--line); border-radius:14px;
+    padding:16px 18px; text-decoration:none; color:var(--text); font-weight:600;
+  }
+  a.btn small{display:block; font-weight:400; color:var(--muted); font-size:13px}
+  a.btn:hover{border-color:var(--accent); background:var(--accent-soft)}
+  a.btn .arrow{color:var(--accent); font-size:18px}
+  a{color:var(--accent)}
+  .note{font-size:14px; color:var(--muted); background:var(--accent-soft); border-radius:12px; padding:14px 16px; margin-top:18px}
+  .note p{margin:0}
+  .note b{color:var(--text)}
+  table{width:100%; border-collapse:collapse; font-size:14.5px; margin:8px 0; background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden}
+  th,td{text-align:left; vertical-align:top; padding:10px 14px; border-bottom:1px solid var(--line)}
+  th{color:var(--muted); font-weight:600; white-space:nowrap; width:34%}
+  tr:last-child th, tr:last-child td{border-bottom:0}
+  code{background:var(--accent-soft); border-radius:5px; padding:1px 5px; font-size:13px; overflow-wrap:anywhere}
+  footer{margin-top:36px; padding-top:18px; border-top:1px solid var(--line); color:var(--muted); font-size:13px; line-height:1.9}
+  footer a{color:var(--muted)}
+  @media (min-width:620px){
+    .wrap{padding:48px 24px 80px}
+    h1{font-size:34px}
+    .icon{width:76px;height:76px;flex-basis:76px;border-radius:18px}
+    .icon svg{width:44px;height:44px}
+    .grid{grid-template-columns:repeat(2,1fr)}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="icon" aria-hidden="true">
+      <svg viewBox="0 0 48 48" fill="none">
+        <rect x="5" y="25" width="38" height="15" rx="4" fill="#F2F6FA"/>
+        <path d="M12 32.5h9" stroke="#0F141B" stroke-width="2.6" stroke-linecap="round"/>
+        <path d="M33 12v13M33 25l-6-6M33 25l6-6" stroke="#FFC24B" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <h1>슬림 비디오 <span style="font-weight:400;color:var(--muted);font-size:.62em">SlimVideo</span></h1>
+      <p class="byline">화질은 그대로, 용량만 줄이기 · 개발자 Topster</p>
+    </div>
+  </div>
+
+  <p class="lead">
+    슬림 비디오는 휴대폰 안의 <b>동영상 용량을 줄여 주는</b> 안드로이드 앱입니다.
+    <span>휴대폰의 하드웨어 인코더를 그대로 써서 서버 없이 앱 안에서만 변환하고, 원본 영상은 건드리지 않습니다.</span>
+  </p>
+
+  <h2>주요 기능</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>화질 유지 압축</h3>
+      <p>해상도는 그대로 두고 H.265 고효율로 다시 인코딩합니다. 1080p H.264 원본이면 보통 40~65% 줄어듭니다.</p>
+    </div>
+    <div class="card">
+      <h3>공유용 · 초경량</h3>
+      <p>카톡·SNS 전송에 맞춘 1080p 균형 모드와, 짧은 변 480p까지 줄이는 초경량 모드.</p>
+    </div>
+    <div class="card">
+      <h3>목표 용량 맞추기</h3>
+      <p>10·25·50·100MB 중 목표를 고르면 길이로 비트레이트를 계산해 맞춥니다. 너무 작으면 해상도를 자동으로 낮춥니다.</p>
+    </div>
+    <div class="card">
+      <h3>H.265 / H.264</h3>
+      <p>최소 용량(H.265)과 호환성(H.264) 중에서 고릅니다. 기기에 H.265 인코더가 없으면 자동으로 H.264로 저장하고 알려 줍니다.</p>
+    </div>
+    <div class="card">
+      <h3>앱을 내려도 계속</h3>
+      <p>압축 중 화면을 나가거나 화면이 꺼져도 진행률 알림과 함께 끝까지 변환합니다.</p>
+    </div>
+    <div class="card">
+      <h3>보관함 · 5개 언어</h3>
+      <p><code>Movies/SlimVideo</code>에 저장된 결과를 보관함에서 재생·공유·삭제. 한국어·English·日本語·中文·Español 지원.</p>
+    </div>
+  </div>
+
+  <h2>앱 정보 및 지원</h2>
+  <div class="links">
+    <a class="btn" href="privacy.html">
+      <span>개인정보처리방침<small>Privacy Policy · 시행일 2026년 11월 25일</small></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="btn" href="mailto:youngsujoa1@gmail.com">
+      <span>문의하기<small>youngsujoa1@gmail.com · 개발자 Topster</small></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="btn" href="app-ads.txt">
+      <span>app-ads.txt<small>AdMob 게시자 인증 파일 (google.com, pub-4832055633016363)</small></span>
+      <span class="arrow">→</span>
+    </a>
+  </div>
+
+  <h2>앱 정보</h2>
+  <table>
+    <tr><th>앱 이름</th><td>슬림 비디오 (SlimVideo)</td></tr>
+    <tr><th>플랫폼</th><td>Android (8.0 이상)</td></tr>
+    <tr><th>패키지</th><td><code>com.youngsu.slimvideo</code></td></tr>
+    <tr><th>버전</th><td>1.0.1</td></tr>
+    <tr><th>언어</th><td>한국어 · English · 日本語 · 中文 · Español</td></tr>
+    <tr><th>개발자</th><td>Topster</td></tr>
+    <tr><th>문의</th><td><a href="mailto:youngsujoa1@gmail.com">youngsujoa1@gmail.com</a></td></tr>
+  </table>
+
+  <div class="note">
+    <p><b>개인정보 안내:</b> 압축은 기기 안에서만 이루어지고, 고른 영상과 결과 파일은 개발자에게 전송되지 않습니다. 압축 결과는 <code>Movies/SlimVideo</code>에 저장되며 원본은 그대로 남습니다. 기기 밖 통신은 광고(Google AdMob)를 불러오는 통신뿐입니다. 자세한 내용은 <a href="privacy.html">개인정보처리방침</a>을 확인해 주세요.</p>
+  </div>
+
+  <footer>
+    슬림 비디오 (SlimVideo) · 개발자 Topster · <a href="mailto:youngsujoa1@gmail.com">youngsujoa1@gmail.com</a><br>
+    <a href="privacy.html">개인정보처리방침</a> · <a href="app-ads.txt">app-ads.txt</a>
+  </footer>
+</div>
+</body>
+</html>
