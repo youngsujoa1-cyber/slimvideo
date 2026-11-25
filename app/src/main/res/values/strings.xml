@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SlimVideo</string>
+
+    <!-- tabs -->
+    <string name="tab_home">Compress</string>
+    <string name="tab_library">Library</string>
+    <string name="tab_settings">Settings</string>
+
+    <!-- home -->
+    <string name="home_title">Shrink your videos</string>
+    <string name="home_subtitle">Same picture, a fraction of the size</string>
+    <string name="pick_video">Choose a video</string>
+    <string name="pick_hint">MP4 · MOV · MKV · WEBM · 3GP · M4V · AVI</string>
+    <string name="pick_change">Choose another</string>
+    <string name="section_mode">Compression</string>
+    <string name="mode_quality_title">Keep quality</string>
+    <string name="mode_quality_badge">Best</string>
+    <string name="mode_quality_desc" formatted="false">Original resolution, H.265 high efficiency, 40–65% smaller</string>
+    <string name="mode_balance_title">Share balance</string>
+    <string name="mode_balance_desc">1080p / 720p — made for chat and social uploads</string>
+    <string name="mode_light_title">Ultra light</string>
+    <string name="mode_light_desc">480p — the smallest file we can make</string>
+    <string name="mode_target_title">Fit a size</string>
+    <string name="mode_target_desc">Pick a limit and we calculate the bitrate for you</string>
+    <string name="section_codec">Output codec</string>
+    <string name="codec_hevc">H.265 · smallest file</string>
+    <string name="codec_h264">H.264 · plays anywhere</string>
+    <string name="codec_hevc_hint">H.265 keeps the same quality at a smaller size. Older players may need H.264.</string>
+    <string name="codec_h264_hint">H.264 plays on every phone, TV and upload site.</string>
+    <string name="hevc_unsupported">This phone has no H.265 encoder — the video will be saved as H.264.</string>
+    <string name="section_target">Target size</string>
+    <string name="target_under">Under %1$s</string>
+    <string name="target_hint">Bitrate is calculated from the video length so the result stays under the limit.</string>
+    <string name="start_compress">Compress</string>
+    <string name="cancel">Cancel</string>
+    <string name="info_duration">Length</string>
+    <string name="info_resolution">Resolution</string>
+    <string name="info_size">Size</string>
+    <string name="info_codec">Codec</string>
+    <string name="info_audio">Audio</string>
+    <string name="info_audio_none">No audio</string>
+    <string name="est_output">About %1$s · %2$d%% smaller</string>
+    <string name="est_background">Saved to Movies/SlimVideo</string>
+
+    <!-- compressing -->
+    <string name="compressing">Compressing…</string>
+    <string name="compressing_hint">Keep the screen on — it finishes faster and you can leave the app.</string>
+    <string name="progress_percent">%1$d%%</string>
+    <string name="compressing_stage_video">Encoding video</string>
+    <string name="compressing_stage_audio">Preparing audio</string>
+    <string name="compressing_stage_finish">Finishing up</string>
+    <string name="cancelled">Compression cancelled</string>
+
+    <!-- result -->
+    <string name="done_title">Done</string>
+    <string name="done_saved">Saved to Movies/SlimVideo</string>
+    <string name="before">Before</string>
+    <string name="after">After</string>
+    <string name="saved_amount">%1$s saved</string>
+    <string name="reduction_percent">%1$d%% smaller</string>
+    <string name="play">Play</string>
+    <string name="share">Share</string>
+    <string name="compress_another">Another video</string>
+    <string name="result_detail">%1$s · %2$s · %3$s</string>
+    <string name="audio_dropped">Audio could not be converted on this phone, so the video was saved without sound.</string>
+    <string name="share_failed">Nothing to share yet</string>
+
+    <!-- errors -->
+    <string name="failed">Compression failed</string>
+    <string name="error_no_video_track">No video track was found in this file.</string>
+    <string name="error_unsupported">This phone cannot decode this video format.</string>
+    <string name="error_encoder">This phone has no usable video encoder.</string>
+    <string name="error_storage">Not enough space to save the result.</string>
+    <string name="error_generic">Something went wrong. Try another video.</string>
+    <string name="error_read">The file could not be opened.</string>
+
+    <!-- library -->
+    <string name="library_title">Compressed videos</string>
+    <string name="library_empty">Nothing compressed yet</string>
+    <string name="library_empty_hint">Pick a video on the Compress tab and it will appear here.</string>
+    <string name="library_reduction">%1$d%% smaller</string>
+    <string name="library_delete_title">Delete this video?</string>
+    <string name="library_delete_body">%1$s will be removed from your phone. This cannot be undone.</string>
+    <string name="delete">Delete</string>
+    <string name="deleted">Deleted</string>
+    <string name="delete_failed">Could not delete the video</string>
+
+    <!-- settings -->
+    <string name="settings_language">Language</string>
+    <string name="settings_app_language">App language</string>
+    <string name="language_system">Follow phone language</string>
+    <string name="settings_defaults">Defaults</string>
+    <string name="settings_default_mode">Default compression</string>
+    <string name="settings_default_codec">Default codec</string>
+    <string name="settings_ads">Ads</string>
+    <string name="settings_ads_body">A banner sits at the very bottom of the screen, and one full-screen ad appears after a video is compressed.</string>
+    <string name="settings_privacy">Privacy</string>
+    <string name="settings_privacy_body">Videos are processed entirely on your phone. Nothing is uploaded to a server.</string>
+    <string name="settings_about">About</string>
+    <string name="settings_version">Version</string>
+    <string name="settings_engine">Compression engine</string>
+    <string name="settings_engine_body">Uses your phone\'s own hardware encoder (H.264 / H.265) for fast, battery-friendly conversion.</string>
+    <string name="close">Close</string>
+    <string name="ok">OK</string>
+
+    <!-- notification -->
+    <string name="notif_channel">Video compression</string>
+    <string name="notif_title">Compressing video</string>
+    <string name="notif_text">%1$s · %2$d%%</string>
+    <string name="notif_done_title">Compression finished</string>
+    <string name="notif_done_text">%1$s is ready</string>
+
+    <!-- permission -->
+    <string name="notif_permission_note">Allow notifications to see compression progress while the app is in the background.</string>
+    <!-- 첫 실행 언어 선택 -->
+    <string name="choose_language_title">Choose your language</string>
+    <string name="choose_language_hint">You can change it anytime in Settings.</string>
+    <string name="choose_language_note">Tap a language to continue.</string>
+</resources>

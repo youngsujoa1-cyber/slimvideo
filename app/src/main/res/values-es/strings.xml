@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SlimVideo</string>
+
+    <string name="tab_home">Comprimir</string>
+    <string name="tab_library">Biblioteca</string>
+    <string name="tab_settings">Ajustes</string>
+
+    <string name="home_title">Reduce tus vídeos</string>
+    <string name="home_subtitle">La misma imagen, una fracción del tamaño</string>
+    <string name="pick_video">Elegir un vídeo</string>
+    <string name="pick_hint">MP4 · MOV · MKV · WEBM · 3GP · M4V · AVI</string>
+    <string name="pick_change">Elegir otro</string>
+    <string name="section_mode">Compresión</string>
+    <string name="mode_quality_title">Mantener calidad</string>
+    <string name="mode_quality_badge">Mejor</string>
+    <string name="mode_quality_desc" formatted="false">Resolución original y H.265: 40–65% menos</string>
+    <string name="mode_balance_title">Equilibrio</string>
+    <string name="mode_balance_desc">1080p / 720p — ideal para chat y redes</string>
+    <string name="mode_light_title">Ultraligero</string>
+    <string name="mode_light_desc">480p — el archivo más pequeño</string>
+    <string name="mode_target_title">Tamaño fijo</string>
+    <string name="mode_target_desc">Elige un límite y calculamos el bitrate</string>
+    <string name="section_codec">Códec de salida</string>
+    <string name="codec_hevc">H.265 · el más pequeño</string>
+    <string name="codec_h264">H.264 · se ve en todas partes</string>
+    <string name="codec_hevc_hint">H.265 mantiene la calidad con menos peso. En equipos antiguos es más seguro H.264.</string>
+    <string name="codec_h264_hint">H.264 se reproduce en cualquier móvil, TV y sitio de subida.</string>
+    <string name="hevc_unsupported">Este móvil no tiene codificador H.265: se guardará en H.264.</string>
+    <string name="section_target">Tamaño objetivo</string>
+    <string name="target_under">Menos de %1$s</string>
+    <string name="target_hint">Calculamos el bitrate según la duración para no superar el límite.</string>
+    <string name="start_compress">Comprimir</string>
+    <string name="cancel">Cancelar</string>
+    <string name="info_duration">Duración</string>
+    <string name="info_resolution">Resolución</string>
+    <string name="info_size">Tamaño</string>
+    <string name="info_codec">Códec</string>
+    <string name="info_audio">Audio</string>
+    <string name="info_audio_none">Sin audio</string>
+    <string name="est_output">Unos %1$s · %2$d%% menos</string>
+    <string name="est_background">Se guarda en Movies/SlimVideo</string>
+
+    <string name="compressing">Comprimiendo…</string>
+    <string name="compressing_hint">Deja la pantalla encendida: termina antes y puedes salir de la app.</string>
+    <string name="progress_percent">%1$d%%</string>
+    <string name="compressing_stage_video">Codificando vídeo</string>
+    <string name="compressing_stage_audio">Preparando audio</string>
+    <string name="compressing_stage_finish">Terminando</string>
+    <string name="cancelled">Compresión cancelada</string>
+
+    <string name="done_title">Listo</string>
+    <string name="done_saved">Guardado en Movies/SlimVideo</string>
+    <string name="before">Antes</string>
+    <string name="after">Después</string>
+    <string name="saved_amount">%1$s ahorrados</string>
+    <string name="reduction_percent">%1$d%% menos</string>
+    <string name="play">Reproducir</string>
+    <string name="share">Compartir</string>
+    <string name="compress_another">Otro vídeo</string>
+    <string name="result_detail">%1$s · %2$s · %3$s</string>
+    <string name="audio_dropped">Este móvil no pudo convertir el audio, así que se guardó sin sonido.</string>
+    <string name="share_failed">Todavía no hay nada que compartir</string>
+
+    <string name="failed">No se pudo comprimir</string>
+    <string name="error_no_video_track">No se encontró vídeo en este archivo.</string>
+    <string name="error_unsupported">Este móvil no puede abrir este formato de vídeo.</string>
+    <string name="error_encoder">Este móvil no tiene un codificador de vídeo disponible.</string>
+    <string name="error_storage">No hay espacio suficiente para guardar el resultado.</string>
+    <string name="error_generic">Algo salió mal. Prueba con otro vídeo.</string>
+    <string name="error_read">No se pudo abrir el archivo.</string>
+
+    <string name="library_title">Vídeos comprimidos</string>
+    <string name="library_empty">Aún no hay vídeos comprimidos</string>
+    <string name="library_empty_hint">Elige un vídeo en la pestaña Comprimir y aparecerá aquí.</string>
+    <string name="library_reduction">%1$d%% menos</string>
+    <string name="library_delete_title">¿Eliminar este vídeo?</string>
+    <string name="library_delete_body">Se eliminará %1$s del móvil. No se puede deshacer.</string>
+    <string name="delete">Eliminar</string>
+    <string name="deleted">Eliminado</string>
+    <string name="delete_failed">No se pudo eliminar el vídeo</string>
+
+    <string name="settings_language">Idioma</string>
+    <string name="settings_app_language">Idioma de la app</string>
+    <string name="language_system">Idioma del teléfono</string>
+    <string name="settings_defaults">Valores por defecto</string>
+    <string name="settings_default_mode">Compresión por defecto</string>
+    <string name="settings_default_codec">Códec por defecto</string>
+    <string name="settings_ads">Anuncios</string>
+    <string name="settings_ads_body">El banner está en la parte inferior de la pantalla y tras comprimir aparece un anuncio a pantalla completa.</string>
+    <string name="settings_privacy">Privacidad</string>
+    <string name="settings_privacy_body">Los vídeos se procesan solo en tu móvil. Nada se sube a un servidor.</string>
+    <string name="settings_about">Información</string>
+    <string name="settings_version">Versión</string>
+    <string name="settings_engine">Motor de compresión</string>
+    <string name="settings_engine_body">Usa el codificador de hardware del móvil (H.264 / H.265): rápido y con poco consumo.</string>
+    <string name="close">Cerrar</string>
+    <string name="ok">OK</string>
+
+    <string name="notif_channel">Compresión de vídeo</string>
+    <string name="notif_title">Comprimiendo vídeo</string>
+    <string name="notif_text">%1$s · %2$d%%</string>
+    <string name="notif_done_title">Compresión terminada</string>
+    <string name="notif_done_text">%1$s está listo</string>
+
+    <string name="notif_permission_note">Permite las notificaciones para ver el progreso con la app en segundo plano.</string>
+    <!-- 첫 실행 언어 선택 -->
+    <string name="choose_language_title">Elige tu idioma</string>
+    <string name="choose_language_hint">Puedes cambiarlo cuando quieras en Ajustes.</string>
+    <string name="choose_language_note">Toca un idioma para continuar.</string>
+</resources>

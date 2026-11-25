@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">精简视频</string>
+
+    <string name="tab_home">压缩</string>
+    <string name="tab_library">视频库</string>
+    <string name="tab_settings">设置</string>
+
+    <string name="home_title">缩小视频体积</string>
+    <string name="home_subtitle">画质不变，体积更轻</string>
+    <string name="pick_video">选择视频</string>
+    <string name="pick_hint">MP4 · MOV · MKV · WEBM · 3GP · M4V · AVI</string>
+    <string name="pick_change">选择其他视频</string>
+    <string name="section_mode">压缩方式</string>
+    <string name="mode_quality_title">保持画质</string>
+    <string name="mode_quality_badge">推荐</string>
+    <string name="mode_quality_desc" formatted="false">保持原分辨率，H.265 高效编码，节省 40~65%</string>
+    <string name="mode_balance_title">分享均衡</string>
+    <string name="mode_balance_desc">1080p / 720p — 适合微信、社交平台发送</string>
+    <string name="mode_light_title">超轻量</string>
+    <string name="mode_light_desc">480p — 最小的文件</string>
+    <string name="mode_target_title">指定体积</string>
+    <string name="mode_target_desc">设定目标体积，自动计算码率</string>
+    <string name="section_codec">输出编码</string>
+    <string name="codec_hevc">H.265 · 体积最小</string>
+    <string name="codec_h264">H.264 · 随处可放</string>
+    <string name="codec_hevc_hint">H.265 在相同画质下体积更小。旧设备建议使用 H.264。</string>
+    <string name="codec_h264_hint">H.264 在任何手机、电视和上传网站上都能播放。</string>
+    <string name="hevc_unsupported">此手机没有 H.265 编码器，将保存为 H.264。</string>
+    <string name="section_target">目标体积</string>
+    <string name="target_under">%1$s 以下</string>
+    <string name="target_hint">根据视频时长计算码率，让结果不超过目标体积。</string>
+    <string name="start_compress">开始压缩</string>
+    <string name="cancel">取消</string>
+    <string name="info_duration">长度</string>
+    <string name="info_resolution">分辨率</string>
+    <string name="info_size">体积</string>
+    <string name="info_codec">编码</string>
+    <string name="info_audio">音频</string>
+    <string name="info_audio_none">无声</string>
+    <string name="est_output">约 %1$s · 节省 %2$d%%</string>
+    <string name="est_background">保存到 Movies/SlimVideo</string>
+
+    <string name="compressing">正在压缩…</string>
+    <string name="compressing_hint">保持屏幕开启会更快，离开应用也会继续。</string>
+    <string name="progress_percent">%1$d%%</string>
+    <string name="compressing_stage_video">正在编码视频</string>
+    <string name="compressing_stage_audio">正在准备音频</string>
+    <string name="compressing_stage_finish">正在收尾</string>
+    <string name="cancelled">已取消压缩</string>
+
+    <string name="done_title">压缩完成</string>
+    <string name="done_saved">已保存到 Movies/SlimVideo</string>
+    <string name="before">压缩前</string>
+    <string name="after">压缩后</string>
+    <string name="saved_amount">节省 %1$s</string>
+    <string name="reduction_percent">缩小 %1$d%%</string>
+    <string name="play">播放</string>
+    <string name="share">分享</string>
+    <string name="compress_another">其他视频</string>
+    <string name="result_detail">%1$s · %2$s · %3$s</string>
+    <string name="audio_dropped">此手机无法转换音频，已保存为无声视频。</string>
+    <string name="share_failed">还没有可分享的视频</string>
+
+    <string name="failed">压缩失败</string>
+    <string name="error_no_video_track">此文件中找不到视频。</string>
+    <string name="error_unsupported">此手机无法打开该视频格式。</string>
+    <string name="error_encoder">此手机没有可用的视频编码器。</string>
+    <string name="error_storage">保存空间不足。</string>
+    <string name="error_generic">出现问题，请换一个视频试试。</string>
+    <string name="error_read">无法打开文件。</string>
+
+    <string name="library_title">已压缩的视频</string>
+    <string name="library_empty">还没有压缩的视频</string>
+    <string name="library_empty_hint">在压缩页选择视频后会显示在这里。</string>
+    <string name="library_reduction">缩小 %1$d%%</string>
+    <string name="library_delete_title">要删除这个视频吗？</string>
+    <string name="library_delete_body">将从手机中删除 %1$s，无法恢复。</string>
+    <string name="delete">删除</string>
+    <string name="deleted">已删除</string>
+    <string name="delete_failed">无法删除视频</string>
+
+    <string name="settings_language">语言</string>
+    <string name="settings_app_language">应用语言</string>
+    <string name="language_system">跟随手机语言</string>
+    <string name="settings_defaults">默认设置</string>
+    <string name="settings_default_mode">默认压缩方式</string>
+    <string name="settings_default_codec">默认输出编码</string>
+    <string name="settings_ads">广告</string>
+    <string name="settings_ads_body">横幅位于屏幕最下方，压缩结束后会显示一次全屏广告。</string>
+    <string name="settings_privacy">隐私</string>
+    <string name="settings_privacy_body">视频只在手机内处理，不会上传到服务器。</string>
+    <string name="settings_about">关于</string>
+    <string name="settings_version">版本</string>
+    <string name="settings_engine">压缩引擎</string>
+    <string name="settings_engine_body">使用手机自带的硬件编码器（H.264 / H.265），速度快、更省电。</string>
+    <string name="close">关闭</string>
+    <string name="ok">确定</string>
+
+    <string name="notif_channel">视频压缩</string>
+    <string name="notif_title">正在压缩视频</string>
+    <string name="notif_text">%1$s · %2$d%%</string>
+    <string name="notif_done_title">压缩完成</string>
+    <string name="notif_done_text">%1$s 已就绪</string>
+
+    <string name="notif_permission_note">允许通知即可在离开应用时查看压缩进度。</string>
+    <!-- 첫 실행 언어 선택 -->
+    <string name="choose_language_title">请选择语言</string>
+    <string name="choose_language_hint">随时可以在设置中更改。</string>
+    <string name="choose_language_note">点一下即可立即应用。</string>
+</resources>

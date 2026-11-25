@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 슬림 비디오 팔레트 — 영화관처럼 어두운 바탕에 보라·시안 네온 -->
+<resources>
+    <color name="bg">#06080E</color>
+    <color name="bg_deep">#03050A</color>
+    <color name="surface">#0B101A</color>
+    <color name="surface_alt">#111827</color>
+    <color name="surface_high">#182136</color>
+    <color name="outline">#22304A</color>
+    <color name="outline_soft">#172034</color>
+    <color name="divider">#141C2B</color>
+
+    <color name="text_primary">#EEF2FB</color>
+    <color name="text_secondary">#94A3BE</color>
+    <color name="text_tertiary">#63728C</color>
+
+    <color name="accent">#7C5CFF</color>
+    <color name="accent_dim">#221A4D</color>
+    <color name="on_accent">#FFFFFF</color>
+
+    <color name="cyan">#35D6ED</color>
+    <color name="cyan_dim">#0C3A44</color>
+
+    <color name="emerald">#2BE0A6</color>
+    <color name="emerald_dim">#0B3A2E</color>
+
+    <color name="danger">#FF5C72</color>
+    <color name="danger_dim">#3A1620</color>
+    <color name="nav_bg">#090D16</color>
+    <color name="track_bg">#1A2333</color>
+
+    <color name="ic_launcher_background">#05070C</color>
+</resources>

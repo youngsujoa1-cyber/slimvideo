@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">スリムビデオ</string>
+
+    <string name="tab_home">圧縮</string>
+    <string name="tab_library">ライブラリ</string>
+    <string name="tab_settings">設定</string>
+
+    <string name="home_title">動画の容量を小さく</string>
+    <string name="home_subtitle">画質はそのまま、容量だけ軽く</string>
+    <string name="pick_video">動画を選ぶ</string>
+    <string name="pick_hint">MP4 · MOV · MKV · WEBM · 3GP · M4V · AVI</string>
+    <string name="pick_change">別の動画を選ぶ</string>
+    <string name="section_mode">圧縮方法</string>
+    <string name="mode_quality_title">画質を保つ</string>
+    <string name="mode_quality_badge">おすすめ</string>
+    <string name="mode_quality_desc" formatted="false">元の解像度のまま、H.265の高効率で40〜65%削減</string>
+    <string name="mode_balance_title">共有バランス</string>
+    <string name="mode_balance_desc">1080p / 720p — LINE・SNS送信に最適</string>
+    <string name="mode_light_title">超軽量</string>
+    <string name="mode_light_desc">480p — もっとも軽いファイル</string>
+    <string name="mode_target_title">容量を指定</string>
+    <string name="mode_target_desc">希望の容量からビットレートを自動計算</string>
+    <string name="section_codec">出力コーデック</string>
+    <string name="codec_hevc">H.265 · 最小容量</string>
+    <string name="codec_h264">H.264 · どこでも再生</string>
+    <string name="codec_hevc_hint">H.265は同じ画質でより小さくなります。古い機器ではH.264が安全です。</string>
+    <string name="codec_h264_hint">H.264はどのスマートフォン・テレビ・投稿サイトでも再生できます。</string>
+    <string name="hevc_unsupported">この端末にはH.265エンコーダがないため、H.264で保存します。</string>
+    <string name="section_target">目標容量</string>
+    <string name="target_under">%1$s以下</string>
+    <string name="target_hint">動画の長さに合わせてビットレートを計算し、目標容量以下に収めます。</string>
+    <string name="start_compress">圧縮を開始</string>
+    <string name="cancel">キャンセル</string>
+    <string name="info_duration">長さ</string>
+    <string name="info_resolution">解像度</string>
+    <string name="info_size">容量</string>
+    <string name="info_codec">コーデック</string>
+    <string name="info_audio">音声</string>
+    <string name="info_audio_none">音声なし</string>
+    <string name="est_output">約%1$s · %2$d%%削減</string>
+    <string name="est_background">Movies/SlimVideoに保存されます</string>
+
+    <string name="compressing">圧縮中…</string>
+    <string name="compressing_hint">画面をつけたままにすると速く終わります。アプリを離れても続きます。</string>
+    <string name="progress_percent">%1$d%%</string>
+    <string name="compressing_stage_video">映像をエンコード中</string>
+    <string name="compressing_stage_audio">音声を準備中</string>
+    <string name="compressing_stage_finish">仕上げ中</string>
+    <string name="cancelled">圧縮をキャンセルしました</string>
+
+    <string name="done_title">圧縮完了</string>
+    <string name="done_saved">Movies/SlimVideoに保存しました</string>
+    <string name="before">圧縮前</string>
+    <string name="after">圧縮後</string>
+    <string name="saved_amount">%1$s節約</string>
+    <string name="reduction_percent">%1$d%%削減</string>
+    <string name="play">再生</string>
+    <string name="share">共有</string>
+    <string name="compress_another">別の動画</string>
+    <string name="result_detail">%1$s · %2$s · %3$s</string>
+    <string name="audio_dropped">この端末で音声を変換できなかったため、音声なしで保存しました。</string>
+    <string name="share_failed">共有できる動画がまだありません</string>
+
+    <string name="failed">圧縮に失敗しました</string>
+    <string name="error_no_video_track">このファイルに映像が見つかりません。</string>
+    <string name="error_unsupported">この端末では開けない動画形式です。</string>
+    <string name="error_encoder">使用できる映像エンコーダがありません。</string>
+    <string name="error_storage">保存する空き容量が足りません。</string>
+    <string name="error_generic">問題が発生しました。別の動画でお試しください。</string>
+    <string name="error_read">ファイルを開けませんでした。</string>
+
+    <string name="library_title">圧縮した動画</string>
+    <string name="library_empty">まだ圧縮した動画はありません</string>
+    <string name="library_empty_hint">圧縮タブで動画を選ぶとここに表示されます。</string>
+    <string name="library_reduction">%1$d%%削減</string>
+    <string name="library_delete_title">この動画を削除しますか？</string>
+    <string name="library_delete_body">%1$sを端末から削除します。元に戻せません。</string>
+    <string name="delete">削除</string>
+    <string name="deleted">削除しました</string>
+    <string name="delete_failed">動画を削除できませんでした</string>
+
+    <string name="settings_language">言語</string>
+    <string name="settings_app_language">アプリの言語</string>
+    <string name="language_system">端末の言語に従う</string>
+    <string name="settings_defaults">既定の設定</string>
+    <string name="settings_default_mode">既定の圧縮方法</string>
+    <string name="settings_default_codec">既定の出力コーデック</string>
+    <string name="settings_ads">広告</string>
+    <string name="settings_ads_body">バナーは画面の一番下に表示され、圧縮が終わると全画面広告が1回表示されます。</string>
+    <string name="settings_privacy">プライバシー</string>
+    <string name="settings_privacy_body">動画は端末内だけで処理され、サーバーには送信されません。</string>
+    <string name="settings_about">情報</string>
+    <string name="settings_version">バージョン</string>
+    <string name="settings_engine">圧縮エンジン</string>
+    <string name="settings_engine_body">端末のハードウェアエンコーダ（H.264 / H.265）を使うため、速くてバッテリーに優しいです。</string>
+    <string name="close">閉じる</string>
+    <string name="ok">OK</string>
+
+    <string name="notif_channel">動画の圧縮</string>
+    <string name="notif_title">動画を圧縮中</string>
+    <string name="notif_text">%1$s · %2$d%%</string>
+    <string name="notif_done_title">圧縮が完了しました</string>
+    <string name="notif_done_text">%1$s の準備ができました</string>
+
+    <string name="notif_permission_note">アプリを離れている間も進行状況を見るには通知を許可してください。</string>
+    <!-- 첫 실행 언어 선택 -->
+    <string name="choose_language_title">言語を選択してください</string>
+    <string name="choose_language_hint">設定からいつでも変更できます。</string>
+    <string name="choose_language_note">選ぶとすぐに適用されます。</string>
+</resources>

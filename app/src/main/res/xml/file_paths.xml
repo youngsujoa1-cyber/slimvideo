@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <cache-path name="slimvideo_cache" path="." />
+    <files-path name="slimvideo_files" path="." />
+    <external-files-path name="slimvideo_external" path="." />
+</paths>

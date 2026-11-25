@@ -1,0 +1,35 @@
+# ── Gradle ──────────────────────────────────────────────
+.gradle/
+build/
+app/build/
+.kotlin/
+!gradle/wrapper/gradle-wrapper.jar
+
+# ── 로컬 설정 (기계마다 다름) ───────────────────────────
+local.properties
+.idea/
+*.iml
+.DS_Store
+captures/
+.externalNativeBuild/
+.cxx/
+
+# ── 빌드 산출물 · 보관함 ────────────────────────────────
+build-archive/
+out/
+tools/logic-check/out/
+
+# ── 서명 · 배포 파일 ────────────────────────────────────
+*.apk
+*.aab
+*.jks
+*.keystore
+*.p12
+*.pem
+*.key
+
+# ── 비밀값 ──────────────────────────────────────────────
+*.env
+google-services.json
+secrets.properties
+keystore.properties

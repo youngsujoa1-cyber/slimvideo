@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">슬림 비디오</string>
+
+    <!-- 탭 -->
+    <string name="tab_home">압축</string>
+    <string name="tab_library">보관함</string>
+    <string name="tab_settings">설정</string>
+
+    <!-- 홈 -->
+    <string name="home_title">동영상 용량 줄이기</string>
+    <string name="home_subtitle">화면은 그대로, 용량만 가볍게</string>
+    <string name="pick_video">동영상 선택</string>
+    <string name="pick_hint">MP4 · MOV · MKV · WEBM · 3GP · M4V · AVI</string>
+    <string name="pick_change">다른 영상 고르기</string>
+    <string name="section_mode">압축 방식</string>
+    <string name="mode_quality_title">화질 유지</string>
+    <string name="mode_quality_badge">추천</string>
+    <string name="mode_quality_desc" formatted="false">원본 해상도 그대로, H.265 고효율로 40~65% 절감</string>
+    <string name="mode_balance_title">공유 균형</string>
+    <string name="mode_balance_desc">1080p / 720p — 카톡·SNS 전송에 딱</string>
+    <string name="mode_light_title">초경량</string>
+    <string name="mode_light_desc">480p — 가장 가벼운 파일</string>
+    <string name="mode_target_title">목표 용량</string>
+    <string name="mode_target_desc">원하는 용량을 정하면 비트레이트를 자동 계산</string>
+    <string name="section_codec">출력 코덱</string>
+    <string name="codec_hevc">H.265 · 가장 작게</string>
+    <string name="codec_h264">H.264 · 어디서나 재생</string>
+    <string name="codec_hevc_hint">H.265는 같은 화질에서 용량이 더 작습니다. 오래된 기기에서는 H.264가 안전합니다.</string>
+    <string name="codec_h264_hint">H.264는 어떤 휴대폰·TV·업로드 사이트에서도 재생됩니다.</string>
+    <string name="hevc_unsupported">이 기기에는 H.265 인코더가 없어 H.264로 저장합니다.</string>
+    <string name="section_target">목표 용량</string>
+    <string name="target_under">%1$s 이하</string>
+    <string name="target_hint">영상 길이에 맞춰 비트레이트를 계산해 목표 용량 아래로 맞춥니다.</string>
+    <string name="start_compress">압축 시작</string>
+    <string name="cancel">취소</string>
+    <string name="info_duration">길이</string>
+    <string name="info_resolution">해상도</string>
+    <string name="info_size">용량</string>
+    <string name="info_codec">코덱</string>
+    <string name="info_audio">오디오</string>
+    <string name="info_audio_none">무음</string>
+    <string name="est_output">예상 %1$s · %2$d%% 절감</string>
+    <string name="est_background">Movies/SlimVideo에 저장됩니다</string>
+
+    <!-- 압축 중 -->
+    <string name="compressing">압축하는 중…</string>
+    <string name="compressing_hint">화면을 켜 두면 더 빠릅니다. 다른 앱을 열어도 계속됩니다.</string>
+    <string name="progress_percent">%1$d%%</string>
+    <string name="compressing_stage_video">영상 인코딩</string>
+    <string name="compressing_stage_audio">오디오 준비</string>
+    <string name="compressing_stage_finish">마무리 중</string>
+    <string name="cancelled">압축을 취소했습니다</string>
+
+    <!-- 결과 -->
+    <string name="done_title">압축 완료</string>
+    <string name="done_saved">Movies/SlimVideo에 저장했습니다</string>
+    <string name="before">압축 전</string>
+    <string name="after">압축 후</string>
+    <string name="saved_amount">%1$s 절약</string>
+    <string name="reduction_percent">%1$d%% 감소</string>
+    <string name="play">재생</string>
+    <string name="share">공유</string>
+    <string name="compress_another">다른 영상</string>
+    <string name="result_detail">%1$s · %2$s · %3$s</string>
+    <string name="audio_dropped">이 기기에서 오디오를 변환하지 못해 무음 영상으로 저장했습니다.</string>
+    <string name="share_failed">공유할 영상이 아직 없습니다</string>
+
+    <!-- 오류 -->
+    <string name="failed">압축에 실패했습니다</string>
+    <string name="error_no_video_track">이 파일에서 영상을 찾을 수 없습니다.</string>
+    <string name="error_unsupported">이 기기에서 열 수 없는 동영상 형식입니다.</string>
+    <string name="error_encoder">이 기기에서 쓸 수 있는 영상 인코더가 없습니다.</string>
+    <string name="error_storage">결과를 저장할 공간이 부족합니다.</string>
+    <string name="error_generic">문제가 생겼습니다. 다른 영상으로 시도해 주세요.</string>
+    <string name="error_read">파일을 열 수 없습니다.</string>
+
+    <!-- 보관함 -->
+    <string name="library_title">압축한 영상</string>
+    <string name="library_empty">아직 압축한 영상이 없어요</string>
+    <string name="library_empty_hint">압축 탭에서 동영상을 고르면 여기에 쌓입니다.</string>
+    <string name="library_reduction">%1$d%% 감소</string>
+    <string name="library_delete_title">영상을 삭제할까요?</string>
+    <string name="library_delete_body">%1$s 을(를) 휴대폰에서 지웁니다. 되돌릴 수 없습니다.</string>
+    <string name="delete">삭제</string>
+    <string name="deleted">삭제했습니다</string>
+    <string name="delete_failed">영상을 삭제하지 못했습니다</string>
+
+    <!-- 설정 -->
+    <string name="settings_language">언어</string>
+    <string name="settings_app_language">앱 언어</string>
+    <string name="language_system">기기 언어 따르기</string>
+    <string name="settings_defaults">기본 설정</string>
+    <string name="settings_default_mode">기본 압축 방식</string>
+    <string name="settings_default_codec">기본 출력 코덱</string>
+    <string name="settings_ads">광고</string>
+    <string name="settings_ads_body">배너는 화면 맨 아래에 있고, 압축이 끝나면 전면 광고가 한 번 표시됩니다.</string>
+    <string name="settings_privacy">개인정보</string>
+    <string name="settings_privacy_body">동영상은 휴대폰 안에서만 처리되며 서버로 전송되지 않습니다.</string>
+    <string name="settings_about">정보</string>
+    <string name="settings_version">버전</string>
+    <string name="settings_engine">압축 엔진</string>
+    <string name="settings_engine_body">휴대폰의 하드웨어 인코더(H.264 / H.265)를 써서 빠르고 배터리를 적게 씁니다.</string>
+    <string name="close">닫기</string>
+    <string name="ok">확인</string>
+
+    <!-- 알림 -->
+    <string name="notif_channel">동영상 압축</string>
+    <string name="notif_title">동영상 압축 중</string>
+    <string name="notif_text">%1$s · %2$d%%</string>
+    <string name="notif_done_title">압축 완료</string>
+    <string name="notif_done_text">%1$s 준비됐습니다</string>
+
+    <!-- 권한 -->
+    <string name="notif_permission_note">앱을 내려도 압축 진행 상황을 보려면 알림을 허용해 주세요.</string>
+    <!-- 첫 실행 언어 선택 -->
+    <string name="choose_language_title">언어를 선택하세요</string>
+    <string name="choose_language_hint">설정에서 언제든 바꿀 수 있어요.</string>
+    <string name="choose_language_note">목록에서 하나를 누르면 바로 적용됩니다.</string>
+</resources>
