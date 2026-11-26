@@ -7,9 +7,9 @@
 | --- | --- |
 | 패키지 | `com.youngsu.slimvideo` |
 | 버전 | 1.0.2 (versionCode 3) |
-| minSdk / targetSdk | 26 (Android 8.0) / 35 (Android 15) |
+| minSdk / targetSdk | 26 (Android 8.0) / 36 (Android 16) |
 | 언어 | English(기본) · 한국어 · 日本語 · 中文 · Español |
-| 광고 | AdMob 배너(최하단) + 압축 완료 후 전면 1회 — Google 공식 테스트 ID |
+| 광고 | AdMob 배너(최하단) + 압축 완료 후 전면 1회 — debug 는 Google 테스트 ID, release 는 실제 ID |
 
 ## 압축 방식 4가지
 
@@ -179,9 +179,18 @@ AOSP `MediaCodec` 문서·소스로 확정해 고치고 빌드·lint·순수 로
 결과물(MOV→MP4, 세로 영상 회전, 5.1 오디오 → AAC)은 설치 후에 확인해야 한다. 코드 경로와
 빌드·lint·순수 로직까지는 검증되어 있다.
 
-## 출시 전에 바꿀 것
+## 출시 빌드 (완료)
 
-1. `ads/AdConfig.kt` 의 `PROD_BANNER_UNIT_ID` / `PROD_INTERSTITIAL_UNIT_ID` 채우고 `USE_TEST_ADS = false`.
-2. `AndroidManifest.xml` 의 `com.google.android.gms.ads.APPLICATION_ID` 를 실제 AdMob 앱 ID 로.
-3. keystore 를 만들고 `app/build.gradle.kts` 의 release signingConfig 연결.
-4. 앱 이름·아이콘·스크린샷은 Play 콘솔 등록 정보에서 지정(아이콘은 `res/mipmap-*` 에 이미 포함).
+광고 ID 는 코드 상수가 아니라 `app/build.gradle.kts` 의 `buildConfigField` · `manifestPlaceholders` 가 넣는다.
+
+- `debug` 빌드: Google 공식 테스트 ID (`ca-app-pub-3940256099942544~3347511713`, 단위 …/6300978111 · …/1033173712)
+- `release` 빌드: 실제 AdMob ID (`ca-app-pub-4832055633016363~6566300855`, 배너 …/8566738692, 전면 …/4299743512)
+- release dex 에 테스트 ID 문자열 0건 (2026-11-26 확인)
+
+업로드 키는 저장소 밖 `../keystores/keystore.properties` + `topster-upload.jks` 를 읽어 release 에 자동 연결된다.
+키 파일이 없으면 서명 없이 빌드되며, 저장소에는 어떤 키도 포함되지 않는다.
+
+```
+./gradlew --offline bundleRelease     # app/build/outputs/bundle/release/app-release.aab (서명됨)
+./gradlew --offline assembleRelease   # 실기기 확인용 서명 APK
+```
