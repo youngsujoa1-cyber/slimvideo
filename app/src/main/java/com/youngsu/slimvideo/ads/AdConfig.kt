@@ -1,40 +1,30 @@
 package com.youngsu.slimvideo.ads
 
+import com.youngsu.slimvideo.BuildConfig
+
 /**
  * 광고 설정 한 곳.
  *
- * 지금은 Google 공식 테스트 ID 로 동작한다. 실제 서비스로 바꿀 때는
- * 이 파일의 PROD_* 상수와 AndroidManifest.xml 의 APPLICATION_ID 만 교체하면 된다.
+ * 광고 ID 는 코드 상수가 아니라 `app/build.gradle.kts` 의 `buildConfigField` 가 넣는다.
+ *  - debug 빌드  : Google 공식 테스트 ID (실기기에서 눌러도 계정에 문제 없음)
+ *  - release 빌드: AdMob 에 등록한 실제 ID (Play 스토어 배포용)
+ *
+ * 이렇게 하면 release `.aab` 의 dex 에 테스트 ID 문자열이 남지 않는다.
+ * 앱 ID 는 `AndroidManifest.xml` 의 `${admobAppId}` 자리표시자가 같은 방식으로 받는다.
  *
  * - 배너는 화면 맨 아래(하단 탭 바보다 더 아래)에 붙는다.
  * - 전면 광고는 압축이 끝난 뒤 결과 화면이 뜰 때 한 번만 보여 준다.
  */
 object AdConfig {
 
-    /** Google 공식 테스트 앱 ID — AndroidManifest.xml 의 APPLICATION_ID 와 같아야 한다. */
-    const val TEST_APP_ID = "ca-app-pub-3940256099942544~3347511713"
-
-    /** Google 공식 테스트 배너 단위 ID */
-    const val TEST_BANNER_UNIT_ID = "ca-app-pub-3940256099942544/6300978111"
-
-    /** Google 공식 테스트 전면 광고 단위 ID */
-    const val TEST_INTERSTITIAL_UNIT_ID = "ca-app-pub-3940256099942544/1033173712"
-
-    /** 실제 배너 단위 ID — AdMob 에서 단위를 만든 뒤 채운다. */
-    const val PROD_BANNER_UNIT_ID = ""
-
-    /** 실제 전면 광고 단위 ID */
-    const val PROD_INTERSTITIAL_UNIT_ID = ""
-
-    /** 출시 직전 false 로 바꾸면 위의 PROD_* 를 쓴다. */
-    const val USE_TEST_ADS: Boolean = true
-
+    /** 하단 배너 단위 ID (디버그=테스트 / release=슬림 비디오 하단 배너) */
     val bannerUnitId: String
-        get() = if (USE_TEST_ADS || PROD_BANNER_UNIT_ID.isBlank()) TEST_BANNER_UNIT_ID else PROD_BANNER_UNIT_ID
+        get() = BuildConfig.ADMOB_BANNER_UNIT_ID
 
+    /** 전면 광고 단위 ID (디버그=테스트 / release=슬림 비디오 전면 광고) */
     val interstitialUnitId: String
-        get() = if (USE_TEST_ADS || PROD_INTERSTITIAL_UNIT_ID.isBlank()) TEST_INTERSTITIAL_UNIT_ID else PROD_INTERSTITIAL_UNIT_ID
+        get() = BuildConfig.ADMOB_INTERSTITIAL_UNIT_ID
 
-    fun isTestMode(): Boolean =
-        USE_TEST_ADS || PROD_BANNER_UNIT_ID.isBlank() || PROD_INTERSTITIAL_UNIT_ID.isBlank()
+    /** 테스트 광고 모드 여부 — 설정 화면 안내 문구에 사용 */
+    fun isTestMode(): Boolean = BuildConfig.DEBUG
 }

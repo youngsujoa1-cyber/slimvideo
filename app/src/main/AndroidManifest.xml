@@ -33,10 +33,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SlimVideo">
 
-        <!-- AdMob 앱 ID (Google 공식 테스트 ID). 실제 ID 로 바꿀 때 AdConfig.kt 와 함께 교체 -->
+        <!-- AdMob 앱 ID — debug 는 Google 공식 테스트 ID, release 는 실제 ID (app/build.gradle.kts 의 manifestPlaceholders) -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713" />
+            android:value="${admobAppId}" />
 
         <activity
             android:name=".ui.MainActivity"
